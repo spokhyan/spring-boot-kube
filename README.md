@@ -6,13 +6,13 @@ $ kubectl config view # Show Merged kubeconfig settings.
 # get the password for the e2e user
 kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
 
-kubectl config view -o jsonpath='{.users[].name}'    # display the first user
-kubectl config view -o jsonpath='{.users[*].name}'   # get a list of users
-kubectl config get-contexts                          # display list of contexts
-kubectl config current-context                       # display the current-context
-kubectl config use-context my-cluster-name           # set the default context to my-cluster-name
+kubectl config view -o jsonpath='{.users[].name}'    display the first user
+kubectl config view -o jsonpath='{.users[*].name}'   get a list of users
+kubectl config get-contexts                          display list of contexts
+kubectl config current-context                       display the current-context
+kubectl config use-context my-cluster-name           set the default context to my-cluster-name
 
-kubectl config set-cluster my-cluster-name           # set a cluster entry in the kubeconfig
+kubectl config set-cluster my-cluster-name           set a cluster entry in the kubeconfig
 
 # configure the URL to a proxy server to use for requests made by this client in the kubeconfig
 kubectl config set-cluster my-cluster-name --proxy-url=my-proxy-url
@@ -30,11 +30,11 @@ kubectl config set-context gce --user=cluster-admin --namespace=foo \
 kubectl config unset users.foo                       # delete user foo
 
 #### Creating objects 
-kubectl apply -f ./my-manifest.yaml            # create resource(s)
-kubectl apply -f ./my1.yaml -f ./my2.yaml      # create from multiple files
-kubectl apply -f ./dir                         # create resource(s) in all manifest files in dir
-kubectl apply -f https://git.io/vPieo          # create resource(s) from url
-kubectl create deployment nginx --image=nginx  # start a single instance of nginx
+kubectl apply -f ./my-manifest.yaml            create resource(s)
+kubectl apply -f ./my1.yaml -f ./my2.yaml      create from multiple files
+kubectl apply -f ./dir                         create resource(s) in all manifest files in dir
+kubectl apply -f https://git.io/vPieo          create resource(s) from url
+kubectl create deployment nginx --image=nginx  start a single instance of nginx
 
 # create a Job which prints "Hello World"
 kubectl create job hello --image=busybox:1.28 -- echo "Hello World"
@@ -42,17 +42,17 @@ kubectl create job hello --image=busybox:1.28 -- echo "Hello World"
 # create a CronJob that prints "Hello World" every minute
 kubectl create cronjob hello --image=busybox:1.28   --schedule="*/1 * * * *" -- echo "Hello World"
 
-kubectl explain pods                           # get the documentation for pod manifests
+kubectl explain pods                           get the documentation for pod manifests
 
 #### Viewing, finding resources
 
 # Get commands with basic output
-kubectl get services                          # List all services in the namespace
-kubectl get pods --all-namespaces             # List all pods in all namespaces
-kubectl get pods -o wide                      # List all pods in the current namespace, with more details
-kubectl get deployment my-dep                 # List a particular deployment
-kubectl get pods                              # List all pods in the namespace
-kubectl get pod my-pod -o yaml                # Get a pod's YAML
+kubectl get services                          List all services in the namespace
+kubectl get pods --all-namespaces             List all pods in all namespaces
+kubectl get pods -o wide                      List all pods in the current namespace, with more details
+kubectl get deployment my-dep                 List a particular deployment
+kubectl get pods                              List all pods in the namespace
+kubectl get pod my-pod -o yaml                Get a pod's YAML
 
 # Describe commands with verbose output
 kubectl describe nodes my-node
