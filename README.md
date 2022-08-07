@@ -32,12 +32,67 @@ $ sudo visudo
 %wheel  ALL=(ALL)       NOPASSWD: ALL
 
 Did you get below error ?
+
 [spokhyan@fedora ~]$ kubectl get pods
 NAME                               READY   STATUS             RESTARTS   AGE
 spring-boot-kube-65486bd84-kmwxd   0/1     ImagePullBackOff   0          79s
 spring-boot-kube-65486bd84-r8wtf   0/1     ImagePullBackOff   0          79s
 
 Follow these steps to resolve -
+
+unresolved -- dropped podman due to known issue with client vs server incompatibility. Switched to Docker.
+
+## Setup
+
+### Docker 
+
+If docker service is not installed, follow these steps -
+
+Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+##### set up the Docker repository
+
+$ sudo dnf -y install dnf-plugins-core
+
+$ sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+##### Install Docker Engine
+
+$ sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+##### Start Docker
+
+$ sudo systemctl start docker
+
+### Kubernetes
+
+$ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+$ ls -l
+
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+#### Configure Minikube using standard Docker driver - docker provides standrad and rootless configuration
+
+[Optional] set docker as default driver:
+
+$ minikube config set driver docker
+
+Start a cluster using the docker driver:
+
+$ minikube start --driver=docker
+
+##### If you get below error then follow subsequest steps to configure group and add user. 
+
+bomb Exiting due to PROVIDER_DOCKER_NEWGRP: "docker version --format -" exit status 1: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/version": dial unix /var/run/docker.sock: connect: permission denied bulb Suggestion: Add your user to the 'docker' group: 'sudo usermod -aG docker $USER && newgrp docker'
+
+Create the docker group - 
+
+$ sudo groupadd docker
+
+Add your user to the docker group - 
+
+$ sudo usermod -aG docker $USER
 
 ### mysql
 Login into mysql server as root user -
