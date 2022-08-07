@@ -82,5 +82,32 @@ Query OK, 0 rows affected (0.02 sec)
 
 This worked!
 
+####
+Create a mysql-deployment.yaml file and apply using kubectl command to create a mysql db in k8.
+
+[spokhyan@fedora spring-boot-kube]$ kubectl apply -f mysql-deployment.yaml
+
+$ kubectl exec -it mysql-6c88c5fccd-pn2tg /bin/bash
+bash-4.2# mysql -h mysql -u root -p
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| kubeDB             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+[spokhyan@fedora spring-boot-kube]$ kubectl get svc
+NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes                  ClusterIP   10.96.0.1       <none>        443/TCP          108m
+mysql                       ClusterIP   None            <none>        3306/TCP         104m
+springboot-kube-mysql-svc   NodePort    10.99.218.117   <none>        8080:30412/TCP   6m3s
+[spokhyan@fedora spring-boot-kube]$ minikube ip
+192.168.49.2
+
 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
